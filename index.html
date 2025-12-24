@@ -38,22 +38,6 @@
       opacity: 0.9;
     }
 
-    #startMusic {
-      margin-top: 25px;
-      padding: 12px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 30px;
-      background: rgba(255,255,255,0.15);
-      color: white;
-      cursor: pointer;
-      backdrop-filter: blur(5px);
-    }
-
-    #startMusic:hover {
-      background: rgba(255,255,255,0.25);
-    }
-
     /* Schneeflocken */
     .snowflake {
       position: fixed;
@@ -91,14 +75,9 @@
 <div class="container">
   <h1 id="headline">🎄 Frohe Weihnachten 🎄</h1>
   <p>Ich wünsche dir eine wundervolle und ruhige Zeit!</p>
-  <button id="startMusic">🎶 Musik starten</button>
 </div>
 
 <div class="santa">🎅🛷</div>
-
-<audio id="music" loop playsinline>
-  <source src="https://cdn.pixabay.com/download/audio/2022/11/21/audio_91c6e32a91.mp3" type="audio/mpeg">
-</audio>
 
 <script>
   /* 🎁 Name aus URL */
@@ -119,17 +98,6 @@
     snow.style.fontSize = 10 + Math.random() * 20 + "px";
     document.body.appendChild(snow);
   }
-
-  /* 🎶 Musik starten */
-  const music = document.getElementById("music");
-  const button = document.getElementById("startMusic");
-
-  button.addEventListener("click", () => {
-    music.volume = 0.25;
-    music.play()
-      .then(() => button.style.display = "none")
-      .catch(err => console.log("Audio blockiert:", err));
-  });
 </script>
 
 </body>
