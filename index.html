@@ -38,16 +38,20 @@
       opacity: 0.9;
     }
 
-    .tap {
-      margin-top: 20px;
+    #startMusic {
+      margin-top: 25px;
+      padding: 12px 20px;
       font-size: 1rem;
-      opacity: 0.7;
-      animation: pulse 2s infinite;
+      border: none;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
+    #startMusic:hover {
+      background: rgba(255,255,255,0.25);
     }
 
     /* Schneeflocken */
@@ -86,28 +90,26 @@
 
 <div class="container">
   <h1 id="headline">🎄 Frohe Weihnachten 🎄</h1>
-  <p id="message">Ich wünsche dir eine wundervolle und ruhige Zeit!</p>
-  <div class="tap">👉 Tippen für Musik</div>
+  <p>Ich wünsche dir eine wundervolle und ruhige Zeit!</p>
+  <button id="startMusic">🎶 Musik starten</button>
 </div>
 
 <div class="santa">🎅🛷</div>
 
-<!-- Weihnachtsmusik -->
-<audio id="music" loop>
+<audio id="music" loop playsinline>
   <source src="https://cdn.pixabay.com/download/audio/2022/11/21/audio_91c6e32a91.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-  // 🎁 Name aus URL lesen
+  /* 🎁 Name aus URL */
   const params = new URLSearchParams(window.location.search);
   const name = params.get("name");
-
   if (name) {
     document.getElementById("headline").innerText =
       `🎄 Frohe Weihnachten, ${decodeURIComponent(name)} 🎄`;
   }
 
-  // ❄ Schneeflocken
+  /* ❄ Schneeflocken */
   for (let i = 0; i < 40; i++) {
     const snow = document.createElement("div");
     snow.className = "snowflake";
@@ -118,13 +120,16 @@
     document.body.appendChild(snow);
   }
 
-  // 🎶 Musik starten per Tippen
+  /* 🎶 Musik starten */
   const music = document.getElementById("music");
-  document.body.addEventListener("click", () => {
-    music.volume = 0.3;
-    music.play();
-    document.querySelector(".tap").style.display = "none";
-  }, { once: true });
+  const button = document.getElementById("startMusic");
+
+  button.addEventListener("click", () => {
+    music.volume = 0.25;
+    music.play()
+      .then(() => button.style.display = "none")
+      .catch(err => console.log("Audio blockiert:", err));
+  });
 </script>
 
 </body>
